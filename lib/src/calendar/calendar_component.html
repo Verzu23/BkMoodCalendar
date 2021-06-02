@@ -1,0 +1,82 @@
+<!-- Components info: https://angulardart.dev/components -->
+<!-- <div>
+  <material-input label="What do you need to do?"
+                  autoFocus floatingLabel style="width:80%"
+                  [(ngModel)]="newTodo"
+                  (keyup.enter)="add()">
+  </material-input>
+
+  <material-fab mini raised
+                (trigger)="add()"
+                [disabled]="newTodo.isEmpty">
+    <material-icon icon="add"></material-icon>
+  </material-fab>
+</div>
+
+<p *ngIf="items.isEmpty">
+  Nothing to do! Add items above.
+</p>
+
+<div *ngIf="items.isNotEmpty">
+  <ul>
+      <li *ngFor="let item of items; let i=index">
+        <material-checkbox #done materialTooltip="Mark item as done">
+        </material-checkbox>
+        <span [class.done]="done.checked">{{item}}</span>
+        <material-fab mini (trigger)="remove(i)">
+          <material-icon icon="delete"></material-icon>
+        </material-fab>
+      </li>
+  </ul>
+</div> -->
+
+<div class="container">
+
+  <div class="head-Bar">
+    <material-fab mini raised (trigger)="removeMonth()">
+      <material-icon icon="arrow_back_ios"></material-icon>
+    </material-fab>
+    <label>{{month}}</label>
+    <material-fab mini raised (trigger)="addMonth()">
+      <material-icon icon="arrow_forward_ios"></material-icon>
+    </material-fab>
+  </div>
+
+  <div class="grid-container">
+    <ng-container *ngFor='let day of weekDays'>
+      <div class="grid-item grid-item-head"><label>{{day}}</label></div>
+    </ng-container>
+    <ng-container *ngFor='let x of createRange(beforeTheFirst)'>
+      <div class="grid-item disabled"></div>
+    </ng-container>
+    <ng-container *ngFor='let day of days; let i=index'>
+      <div class="grid-item">
+        <div>
+          <p>
+            {{i+1}}
+          </p>
+        </div>
+        <ng-container *ngFor='let event of eventInThisDay(day).toList(); let i = index'>
+          <ng-container *ngIf='i<3'>
+            <div class="event">
+              <p>
+                {{event.luogo.nome}}
+              </p>
+            </div>
+          </ng-container>
+          <ng-container *ngIf='i==4'>
+            <a class="expand">+{{eventInThisDay(day).length - 3}} more</a>
+          </ng-container>
+        </ng-container>
+      </div>
+    </ng-container>
+    <ng-container *ngFor='let x of createRange(afterTheLast)'>
+      <div class="grid-item disabled"></div>
+    </ng-container>
+
+  </div>
+
+
+
+
+</div>
