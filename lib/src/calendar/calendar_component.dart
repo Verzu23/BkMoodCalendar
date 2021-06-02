@@ -133,8 +133,8 @@ class Calendar implements OnInit {
 
   List<MotoEvent> eventInThisDay(DateTime day) {
     var event = <MotoEvent>[];
-    event.addAll(motoEvents.where(
-        (element) => calendarService.isSameDate(element.oraInizio, day)));
+    event.addAll(motoEvents.where((element) => calendarService.isSameDate(
+        calendarService.fromStringToDateTime(element.oraInizio), day)));
 
     return event;
   }

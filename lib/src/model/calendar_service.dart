@@ -48,18 +48,13 @@ class CalendarService {
       final response =
           await _http.get(_baseUrl + getPjOwnersUrl, headers: _headers);
       List<dynamic> body = jsonDecode(response.body);
-      var pjOwnersList = <MotoEvent>[];
+      var motoEvents = <MotoEvent>[];
       body.forEach((e) {
-        var pjOwner = MotoEvent(e['idProjectOwner']);
-        /* pjOwner.active = e['active'];
-        pjOwner.name = e['name'];
-        pjOwner.bomName = e['bomName'];
-        pjOwner.filtrable = e['filtrable']; */
-        pjOwnersList.add(pjOwner);
+        motoEvents.add(MotoEvent.fromJson(e));
       });
-      return pjOwnersList;
+      return motoEvents;
     } catch (e) {
-      _handleError(e, 'getPjOwners');
+      _handleError(e, 'getMotoEvents');
       return null;
     }
   }
@@ -67,6 +62,13 @@ class CalendarService {
   bool isSameDate(DateTime date1, DateTime date2) {
     return date1?.toString()?.split(' ')?.first ==
         (date2.toString()?.split(' ')?.first);
+  }
+
+  DateTime fromStringToDateTime(String date) {
+    var year = int.parse(date.split('.')[2]);
+    var month = int.parse(date.split('.')[1]);
+    var day = int.parse(date.split('.')[0]);
+    return DateTime(year, month, day);
   }
 
   Exception _handleError(dynamic e, String function) {
