@@ -13,7 +13,9 @@
 }
 
 .head-Bar {
-  width: fit-content;
+  width: intrinsic;
+  width: -moz-max-content;
+  width: -webkit-max-content;
   margin: auto;
   font-size: 40px;
   margin-top: 30px;
@@ -45,13 +47,16 @@
 .grid-item>div:first-child>p {
   margin: 0px;
   padding: 0px 5px;
-  width: fit-content;
+  width: intrinsic;
+  width: -moz-max-content;
+  width: -webkit-max-content;
   font-size: medium;
 }
 
 .grid-item>div:nth-child(n+2) {
-  width: fit-content;
-  margin: 2px auto;
+  width: intrinsic;
+  width: -moz-max-content;
+  width: -webkit-max-content;  margin: 2px auto;
   border: 1px solid #ddd;
   border-radius: 5px;
   background: whitesmoke;
@@ -60,7 +65,9 @@
 .grid-item>div:nth-child(n+2)>p {
   margin: 0px;
   padding: 0px 5px;
-  width: fit-content;
+  width: intrinsic;
+  width: -moz-max-content;
+  width: -webkit-max-content;
   font-size: large;
 }
 
@@ -100,4 +107,10 @@
   color: lightblue;
   font-size: medium;
   padding: 5px;
+}
+
+.map-area {
+  width: 98%;
+  height: 60vh;
+  margin: 10px;
 }

@@ -17,6 +17,5 @@ void main() {
   } else {
     print('ServiceWorkers are not supported.');
   }*/
-
   runApp(ng.AppComponentNgFactory, createInjector: injector);
 }

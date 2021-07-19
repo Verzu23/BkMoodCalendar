@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:BkMoodCalendar/src/model/motoEvent.dart';
 import 'package:angular/angular.dart';
@@ -6,6 +7,8 @@ import 'package:angular_components/angular_components.dart';
 import 'package:angular_components/utils/browser/window/module.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:google_maps/google_maps.dart';
+import 'package:angular_forms/angular_forms.dart';
 
 import '../model/calendar_service.dart';
 
@@ -18,12 +21,13 @@ import '../model/calendar_service.dart';
     MaterialFabComponent,
     MaterialIconComponent,
     materialInputDirectives,
+    formDirectives,
     NgFor,
     NgIf,
   ],
   providers: [windowBindings, ClassProvider(CalendarService)],
 )
-class Calendar implements OnInit {
+class Calendar implements OnInit, AfterViewInit {
   CalendarService calendarService;
   int beforeTheFirst = 0;
   List<DateTime> days = [];
@@ -37,21 +41,27 @@ class Calendar implements OnInit {
   List<MotoEvent> motoEvents = <MotoEvent>[];
 
   String language = 'it_IT';
+  GMap _map;
+  Marker _aMarker;
+  Marker _bMarker;
+  final double milesPerKm = 0.621371;
+
+  /// Radius of the earth in km.
+  final int radiusOfEarth = 6371;
 
   Calendar(this.calendarService);
 
   @override
   Future<Null> ngOnInit() async {
+/*     document.addEventListener('touchstart', (event) => touchStart(event));
+    document.addEventListener('touchmove', (event) => touchMove(event));
+    document.addEventListener('touchend', (event) => touchEnd(event)); */
     await initializeDateFormatting('it_IT', null);
     await initializeDateFormatting('en_US', null);
 
     selectedMonth = DateTime.now();
     changeMonth(selectedMonth);
     setWeekDays();
-    motoEvents = await calendarService.getMotoEvents();
-/*     document.addEventListener('touchstart', (event) => touchStart(event));
-    document.addEventListener('touchmove', (event) => touchMove(event));
-    document.addEventListener('touchend', (event) => touchEnd(event)); */
   }
 
   List<int> createRange(int numero) {
@@ -138,4 +148,82 @@ class Calendar implements OnInit {
 
     return event;
   }
+
+  /// The DOM element reference for the Google Maps initialization.
+  @ViewChild('mapArea')
+  var mapAreaRef;
+
+  @override
+  Future<void> ngAfterViewInit() async {
+    motoEvents = await calendarService.getMotoEvents();
+    _map = GMap(
+        mapAreaRef.nativeElement,
+        MapOptions()
+          ..zoom = 5
+          //..center = LatLng(47.4979, 19.0402) // Budapest, Hungary
+          ..center = LatLng(41.902782, 12.496366) //Rome, Italy
+        );
+    _map.onClick.listen((MouseEvent event) {
+      _updatePosition(event.latLng);
+      //_updateDistance();
+    });
+    motoEvents.forEach((element) {
+      _createMarker(
+          _map,
+          '',
+          LatLng(num.parse(element.luogo.latitudine),
+              num.parse(element.luogo.longitudine)));
+    });
+  }
+
+  /*String _formatPosition(LatLng position) {
+    if (position == null) return null;
+    return '${position.lat.toStringAsFixed(4)}, '
+        '${position.lng.toStringAsFixed(4)}';
+  }*/
+
+  void _updatePosition(LatLng position) {
+    if (_aMarker == null) {
+      _aMarker = _createMarker(_map, 'A', position);
+    } else if (_bMarker == null) {
+      _bMarker = _createMarker(_map, 'B', position);
+    } else {
+      _aMarker.position = _bMarker.position;
+      _bMarker.position = position;
+    }
+  }
+
+  Marker _createMarker(GMap map, String label, LatLng position) {
+    final marker = Marker(MarkerOptions()
+      ..map = map
+      ..draggable = true
+      ..label = label
+      ..position = position);
+    marker.onDrag.listen((MouseEvent event) {
+      //_updateDistance();
+    });
+    return marker;
+  }
+
+  /*void _updateDistance() {
+    if (_aMarker == null || _bMarker == null) return;
+    var d = _calculateDistance();
+    if (unit == 'miles') {
+      d *= milesPerKm;
+    }
+    distance = '${d.round()} $unit';
+  }*/
+
+  //double _toRadian(num degree) => degree * pi / 180.0;
+
+  /*double _calculateDistance() {
+    final dLat = _toRadian(b.lat - a.lat);
+    final sLat = pow(sin(dLat / 2), 2);
+    final dLng = _toRadian(b.lng - a.lng);
+    final sLng = pow(sin(dLng / 2), 2);
+    final cosALat = cos(_toRadian(a.lat));
+    final cosBLat = cos(_toRadian(b.lat));
+    final x = sLat + cosALat * cosBLat * sLng;
+    return 2 * atan2(sqrt(x), sqrt(1 - x)) * radiusOfEarth;
+  }*/
 }
