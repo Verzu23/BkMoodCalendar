@@ -11,8 +11,8 @@ class CalendarService {
   final Client _http;
   static final _headers = {'Content-Type': 'application/json;charset=utf-8'};
 
-  static const _baseUrl = 'http://127.0.0.1:4200/api/calendar';
-  static const getPjOwnersUrl = '/getEvents/';
+  static const _baseUrl = 'http://127.0.0.1:8081/api/calendar';
+  static const getEventsUrl = '/getEvents/';
 
   CalendarService(this._http);
 
@@ -46,7 +46,7 @@ class CalendarService {
   Future<List<MotoEvent>> getMotoEvents() async {
     try {
       final response =
-          await _http.get(_baseUrl + getPjOwnersUrl, headers: _headers);
+          await _http.get(_baseUrl + getEventsUrl, headers: _headers);
       List<dynamic> body = jsonDecode(response.body);
       var motoEvents = <MotoEvent>[];
       body.forEach((e) {
