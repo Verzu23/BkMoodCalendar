@@ -4,11 +4,14 @@ import 'dart:math';
 import 'package:BkMoodCalendar/src/model/motoEvent.dart';
 import 'package:angular/angular.dart';
 import 'package:angular_components/angular_components.dart';
+import 'package:angular_components/model/action/async_action.dart';
+import 'package:angular_components/utils/angular/scroll_host/angular_2.dart';
 import 'package:angular_components/utils/browser/window/module.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:google_maps/google_maps.dart';
 import 'package:angular_forms/angular_forms.dart';
+import 'package:ng_bootstrap/ng_bootstrap.dart';
 
 import '../model/calendar_service.dart';
 
@@ -22,10 +25,19 @@ import '../model/calendar_service.dart';
     MaterialIconComponent,
     materialInputDirectives,
     formDirectives,
+    bsDirectives,
+    MaterialStepperComponent,
+    StepDirective,
+    SummaryDirective,
     NgFor,
     NgIf,
   ],
-  providers: [windowBindings, ClassProvider(CalendarService)],
+  providers: [
+    windowBindings,
+    materialProviders,
+    ClassProvider(CalendarService),
+    scrollHostProviders
+  ],
 )
 class Calendar implements OnInit, AfterViewInit {
   CalendarService calendarService;
@@ -226,4 +238,34 @@ class Calendar implements OnInit, AfterViewInit {
     final x = sLat + cosALat * cosBLat * sLng;
     return 2 * atan2(sqrt(x), sqrt(1 - x)) * radiusOfEarth;
   }*/
+
+  String modalAction;
+  List<Map<String, dynamic>> get buttons => [
+        {
+          'label': 'Cancella',
+          'onClick': handleCancel,
+          'cssClasses': 'btn-secondary'
+        }
+      ];
+
+  void onModalClose(String _modalAction) {
+    modalAction = _modalAction;
+    print('modalAction: $modalAction');
+  }
+
+  void openModal(BsModalComponent myModal) {
+    myModal.show();
+  }
+
+  Future<String> handleCancel() {
+    print('cancelling');
+    return Future.delayed(Duration(seconds: 0), () => 'CANCEL');
+  }
+
+  void validDelayedCheck(AsyncAction<bool> action) {
+    action.cancelIf(Future.delayed(const Duration(seconds: 0), () {
+      // Don't cancel
+      return false;
+    }));
+  }
 }

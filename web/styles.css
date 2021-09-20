@@ -2,7 +2,7 @@
 @import url(https://fonts.googleapis.com/css?family=Material+Icons);
 
 body {
-  margin: 0 auto;
+  margin: 0 auto !important;
   width: fit-content;
 }
 

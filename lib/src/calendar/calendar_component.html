@@ -30,7 +30,7 @@
   </ul>
 </div> -->
 
-<div class="container">
+<div class="contain">
 
   <div class="map-area" #mapArea>[map]</div>
 
@@ -52,7 +52,7 @@
       <div class="grid-item disabled"></div>
     </ng-container>
     <ng-container *ngFor='let day of days; let i=index'>
-      <div class="grid-item">
+      <div class="grid-item" (click)="openModal(myModal)">
         <div>
           <p>
             {{i+1}}
@@ -77,5 +77,23 @@
     </ng-container>
 
   </div>
+
+  <bs-modal #myModal [header]="'Are you sure?'" [buttons]="buttons" (close)="onModalClose($event)">
+    <material-stepper legalJumps="backwards" orientation="horizontal" size="default">
+      <template step name="Step A Title" (continue)="validDelayedCheck($event)">
+        <div class="step-a">
+          <h1>Content A</h1>
+          (1s continue validation)
+        </div>
+      </template>
+      <template step name="Step B Title">
+        <div class="step-b">
+          <h1>Content B</h1>
+          (1s cancel validation time)
+        </div>
+      </template>
+      
+    </material-stepper>
+  </bs-modal>
 
 </div>

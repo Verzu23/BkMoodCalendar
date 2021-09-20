@@ -11,6 +11,7 @@ dependencies:
   angular_components: ^1.0.2
   intl: ^0.16.0
   google_maps: ^3.0.0
+  ng_bootstrap: ^1.2.0
 
 dev_dependencies:
   angular_test: ^2.3.0

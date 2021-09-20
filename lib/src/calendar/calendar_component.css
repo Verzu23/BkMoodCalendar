@@ -1,4 +1,4 @@
-.container {
+.contain {
   -webkit-user-select: none;
   /* Safari */
   -webkit-touch-callout: none;
@@ -37,7 +37,8 @@
   border: 1px solid rgba(0, 0, 0, 0.8);
   font-size: 30px;
   text-align: center;
-  height: 130px;
+  height: 160px !important;
+  cursor: pointer;
 }
 
 .grid-item>div:first-child {
@@ -72,11 +73,12 @@
 }
 
 .grid-item-head {
-  height: 20px;
-  width: 12vw;
-  min-width: 160px;
-  line-height: 20px;
-  padding: 10px;
+    height: 35px !important;
+    width: 14vw;
+    min-width: 160px;
+    line-height: 20px;
+    padding: 10px;
+    overflow: hidden;
 }
 
 .grid-item:first-child {

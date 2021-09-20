@@ -92,6 +92,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
+  bootstrap_sass:
+    dependency: transitive
+    description:
+      name: bootstrap_sass
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.5.0"
   build:
     dependency: transitive
     description:
@@ -267,6 +274,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.10.11"
+  font_awesome:
+    dependency: transitive
+    description:
+      name: font_awesome
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "5.10.1"
   glob:
     dependency: transitive
     description:
@@ -337,6 +351,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.6.3"
+  js_shims:
+    dependency: transitive
+    description:
+      name: js_shims
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0"
   js_wrapping:
     dependency: transitive
     description:
@@ -379,6 +400,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
+  ng_bootstrap:
+    dependency: "direct main"
+    description:
+      name: ng_bootstrap
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.2.0"
   node_interop:
     dependency: transitive
     description:
@@ -567,7 +595,7 @@ packages:
       name: stream_transform
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.0"
+    version: "1.2.0"
   string_scanner:
     dependency: transitive
     description:
