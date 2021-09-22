@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:html';
 import 'dart:math';
 
 import 'package:BkMoodCalendar/src/model/motoEvent.dart';
@@ -54,8 +55,10 @@ class Calendar implements OnInit, AfterViewInit {
 
   String language = 'it_IT';
   GMap _map;
+  GMap _mapInsert;
   Marker _aMarker;
   Marker _bMarker;
+  Marker _inseredMarker;
   final double milesPerKm = 0.621371;
 
   /// Radius of the earth in km.
@@ -175,17 +178,18 @@ class Calendar implements OnInit, AfterViewInit {
           //..center = LatLng(47.4979, 19.0402) // Budapest, Hungary
           ..center = LatLng(41.902782, 12.496366) //Rome, Italy
         );
+
     _map.onClick.listen((MouseEvent event) {
       _updatePosition(event.latLng);
       //_updateDistance();
     });
-    motoEvents.forEach((element) {
+    /*motoEvents.forEach((element) {
       _createMarker(
           _map,
           '',
           LatLng(num.parse(element.luogo.latitudine),
               num.parse(element.luogo.longitudine)));
-    });
+    });*/
   }
 
   /*String _formatPosition(LatLng position) {
@@ -202,6 +206,14 @@ class Calendar implements OnInit, AfterViewInit {
     } else {
       _aMarker.position = _bMarker.position;
       _bMarker.position = position;
+    }
+  }
+
+  void _InsertPosition(LatLng position) {
+    if (_inseredMarker == null) {
+      _inseredMarker = _createMarker(_mapInsert, 'A', position);
+    } else {
+      _inseredMarker.position = position;
     }
   }
 
@@ -241,10 +253,11 @@ class Calendar implements OnInit, AfterViewInit {
 
   String modalAction;
   List<Map<String, dynamic>> get buttons => [
+        {'label': 'Salva', 'onClick': handleSave, 'cssClasses': 'btn-success'},
         {
           'label': 'Cancella',
           'onClick': handleCancel,
-          'cssClasses': 'btn-secondary'
+          'cssClasses': 'btn-danger'
         }
       ];
 
@@ -255,6 +268,27 @@ class Calendar implements OnInit, AfterViewInit {
 
   void openModal(BsModalComponent myModal) {
     myModal.show();
+    var modalElement = document.getElementsByClassName('modal-dialog');
+    if (modalElement != null) {
+      (modalElement.first as DivElement).style.maxWidth = '75%';
+    }
+    var mapAreaInsert = document.getElementById('mapAreaInsert');
+    _mapInsert = GMap(
+        mapAreaInsert,
+        MapOptions()
+          ..zoom = 5
+          //..center = LatLng(47.4979, 19.0402) // Budapest, Hungary
+          ..center = LatLng(41.902782, 12.496366) //Rome, Italy
+        );
+    _mapInsert.onClick.listen((MouseEvent event) {
+      _InsertPosition(event.latLng);
+      //_updateDistance();
+    });
+  }
+
+  String handleSave() {
+    print('saving');
+    return 'SAVE';
   }
 
   Future<String> handleCancel() {

@@ -78,22 +78,29 @@
 
   </div>
 
-  <bs-modal #myModal [header]="'Are you sure?'" [buttons]="buttons" (close)="onModalClose($event)">
-    <material-stepper legalJumps="backwards" orientation="horizontal" size="default">
-      <template step name="Step A Title" (continue)="validDelayedCheck($event)">
-        <div class="step-a">
-          <h1>Content A</h1>
-          (1s continue validation)
+  <bs-modal #myModal [header]="'Dicci dove sarai!'" [buttons]="buttons" (close)="onModalClose($event)">
+
+    <div class="containerInsert">
+      <div class="gridMap">
+        <div class="map-area-insert" id="mapAreaInsert" #mapAreaInsert>[map]</div>
+      </div>
+      <div class="gridData">
+        <div class="inputForm">
+          <select class="form-select">
+            <option selected value="1">Carlo</option>
+            <option value="2">Giuseppe</option>
+            <option value="3">Gabriella</option>
+          </select>
+          <div class="datesDiv">
+            <input type="time" id="appt" name="appt" min="08:00" max="23:00" required>
+            <input style="margin-left:50px;" type="time" id="appt" name="appt" min="08:00" max="23:00" required>
+          </div>
         </div>
-      </template>
-      <template step name="Step B Title">
-        <div class="step-b">
-          <h1>Content B</h1>
-          (1s cancel validation time)
-        </div>
-      </template>
-      
-    </material-stepper>
+      </div>
+    </div>
+
+
+
   </bs-modal>
 
 </div>

@@ -57,7 +57,8 @@
 .grid-item>div:nth-child(n+2) {
   width: intrinsic;
   width: -moz-max-content;
-  width: -webkit-max-content;  margin: 2px auto;
+  width: -webkit-max-content;
+  margin: 2px auto;
   border: 1px solid #ddd;
   border-radius: 5px;
   background: whitesmoke;
@@ -73,12 +74,12 @@
 }
 
 .grid-item-head {
-    height: 35px !important;
-    width: 14vw;
-    min-width: 160px;
-    line-height: 20px;
-    padding: 10px;
-    overflow: hidden;
+  height: 35px !important;
+  width: 14vw;
+  min-width: 160px;
+  line-height: 20px;
+  padding: 10px;
+  overflow: hidden;
 }
 
 .grid-item:first-child {
@@ -105,7 +106,7 @@
   cursor: pointer;
 }
 
-.expand{
+.expand {
   color: lightblue;
   font-size: medium;
   padding: 5px;
@@ -115,4 +116,55 @@
   width: 98%;
   height: 60vh;
   margin: 10px;
+}
+
+.map-area-insert {
+  height: 30vh;
+  margin: 10px;
+}
+
+.containerInsert {
+  display: grid;
+  grid-template-columns: 65% 35%;
+  grid-template-rows: auto;
+  gap: 0px 0px;
+  grid-template-areas: "gridMap gridData";
+}
+
+.gridMap {
+  grid-area: gridMap;
+}
+
+.gridData {
+  grid-area: gridData;
+}
+
+.inputForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 25px;
+}
+
+select, input {
+  margin-top: 10px;
+  width: 60%;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  outline: none;
+}
+
+input[type="time"] {
+  margin-top: 10px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  outline: none;
+}
+
+.datesDiv {
+  display: flex;
+  width: 60%;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  flex-direction: row;
 }
